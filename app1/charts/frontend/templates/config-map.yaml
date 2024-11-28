@@ -1,0 +1,38 @@
+{{- if .Values.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "frontend.config-map.fullname" . }}
+  annotations:
+    avp.kubernetes.io/path: {{ .Values.avp }}
+data:
+  appconfig.js: |-
+    {
+      appconfig = 
+        {
+          application: {
+            baseUrl: {{ required "A valid .Values.config.application.baseUrl entry required!" .Values.config.application.baseUrl | quote }},
+            name: {{ required "A valid .Values.config.application.name entry required!" .Values.config.application.name | quote }}
+          },
+          oAuthConfig: {
+            issuer: {{ required "A valid .Values.config.oAuthConfig.issuer entry required!" .Values.config.oAuthConfig.issuer | quote }},
+            redirectUri: {{ required "A valid .Values.config.oAuthConfig.redirectUri entry required!" .Values.config.oAuthConfig.redirectUri | quote }},
+            clientId: {{ required "A valid .Values.config.oAuthConfig.clientId entry required!" .Values.config.oAuthConfig.clientId | quote }},
+            responseType: {{ required "A valid .Values.config.oAuthConfig.responseType entry required!" .Values.config.oAuthConfig.responseType | quote }},
+            scope: {{ required "A valid .Values.config.oAuthConfig.scope entry required!" .Values.config.oAuthConfig.scope | quote }},
+            requireHttps: {{ required "A valid .Values.config.oAuthConfig.requireHttps entry required!" .Values.config.oAuthConfig.requireHttps | quote }}
+          },
+          production: {{ required "A valid .Values.config.production entry required!" .Values.config.production | quote }},
+          apis: {
+              default: {
+                url: {{ required "A valid .Values.config.apis.default.url entry required!" .Values.config.apis.default.url | quote }},
+                rootNamespace: {{ required "A valid .Values.config.apis.default.rootNamespace entry required!" .Values.config.apis.default.rootNamespace | quote }}
+              },
+              AbpAccountPublic: {
+                url: {{ required "A valid .Values.config.apis.AbpAccountPublic.url entry required!" .Values.config.apis.AbpAccountPublic.url | quote }},
+                rootNamespace: {{ required "A valid .Values.config.apis.AbpAccountPublic.rootNamespace entry required!" .Values.config.apis.AbpAccountPublic.rootNamespace | quote }}
+              }
+          },
+        }
+    }
+{{- end }}

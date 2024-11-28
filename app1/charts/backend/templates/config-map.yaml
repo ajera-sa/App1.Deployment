@@ -1,0 +1,35 @@
+{{- if .Values.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "backend.config-map.fullname" . }}
+  annotations:
+    avp.kubernetes.io/path: {{ .Values.avp }}
+data:
+  appsettings.json: |-
+    {
+      "App": {
+        "SelfUrl": {{ required "A valid .Values.config.App.SelfUrl entry required!" .Values.config.App.SelfUrl | quote }},
+        "AngularUrl": {{ required "A valid .Values.config.App.AngularUrl entry required!" .Values.config.App.AngularUrl | quote }},
+        "MVCPublicUrl": {{ required "A valid .Values.config.App.MVCPublicUrl entry required!" .Values.config.App.MVCPublicUrl | quote }},
+        "CorsOrigins": {{ required "A valid .Values.config.App.CorsOrigins entry required!" .Values.config.App.CorsOrigins | quote }},
+        "DisablePII": {{ required "A valid .Values.config.App.DisablePII entry required!" .Values.config.App.DisablePII | quote }},
+        "HealthCheckUrl": {{ required "A valid .Values.config.App.HealthCheckUrl entry required!" .Values.config.App.HealthCheckUrl | quote }}
+      },
+      "ConnectionStrings": {
+        "Default": {{ required "A valid .Values.config.ConnectionStrings.Default entry required!" .Values.config.ConnectionStrings.Default | quote }},
+      },
+      "Redis": {
+        "Configuration": {{ required "A valid .Values.config.Redis.Configuration entry required!" .Values.config.Redis.Configuration | quote }}
+      },
+      "AuthServer": {
+        "Authority": {{ required "A valid .Values.config.AuthServer.Authority entry required!" .Values.config.AuthServer.Authority | quote }},
+        "RequireHttpsMetadata": {{ required "A valid .Values.config.AuthServer.RequireHttpsMetadata entry required!" .Values.config.AuthServer.RequireHttpsMetadata | quote }},
+        "SwaggerClientId": {{ required "A valid .Values.config.AuthServer.SwaggerClientId entry required!" .Values.config.AuthServer.SwaggerClientId | quote }}
+      },
+      "StringEncryption": {
+        "DefaultPassPhrase": {{ required "A valid .Values.config.StringEncryption.DefaultPassPhrase entry required!" .Values.config.StringEncryption.DefaultPassPhrase | quote }},
+      }
+    }
+
+{{- end }}

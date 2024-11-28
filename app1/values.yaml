@@ -1,0 +1,22 @@
+# Default values for app1Chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+backend:
+  # enabled: true|false,
+  # if you want to split the hosts "backend, front end ..etc" into more than one cluster, you can choose what to deploy in each release.
+  # true means that this will be deployed within your release.
+  enabled: true
+frontend:
+  # enabled: true|false,
+  # if you want to split the hosts "backend, front end ..etc" into more than one cluster, you can choose what to deploy in each release.
+  # true means that this will be deployed within your release.
+  enabled: true
+authserver:
+  # enabled: true|false,
+  # if you want to split the hosts "backend, front end ..etc" into more than one cluster, you can choose what to deploy in each release.
+  # true means that this will be deployed within your release.
+  enabled: true
